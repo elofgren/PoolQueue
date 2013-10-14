@@ -21,4 +21,14 @@ def NetDrop(url,filename):
 	f.close()
 	return()
 
-test = NetDrop('https://raw.github.com/elofgren/PML/master/SIR.psc','test.psc')
+CDIPoolDrop = NetDrop(URLHERE,'CDIpool.psc')
+CDIQueueDrop = NetDrop(URLHERE,'CDIqueue.psc')	
+
+# General simulations parameters
+start_time = 0.0
+end_time = 8760
+n_runs = 50
+header = "Incident, Recur, Level"
+
+
+
