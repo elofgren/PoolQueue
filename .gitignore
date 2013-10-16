@@ -1,2 +1,6 @@
 
 _pys_parsetab.py
+
+*.psc
+
+*.pyc
