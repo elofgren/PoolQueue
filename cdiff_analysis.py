@@ -6,23 +6,46 @@
 
 # Module Imports
 import pumphandle as ph
+import os
 import stochpy
 import pylab as pl
 import numpy as numpy
 
-
 # Pull down most recent files from internet
 
-CDIPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/LV.psc','CDIpool.psc')
-CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/SIR_BirthDeath.psc','CDIqueue.psc')	
+CDIPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/cdiff_FT.psc','CDIpool.psc')
+CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/cdiff_FT_queue.psc','CDIqueue.psc')	
 
-# General simulations parameters
+# General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 50
-header = "Incident, Recur, Level"
+n_runs = 10
+header = "Incident, Recur"
+
+#########################
+# Pool-based Entry/Exit #
+#########################
+
+CDIPool = stochpy.SSA()
+CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
+PoolOutcomes = numpy.zeros([n_runs,2])
+
+def CDIPoolRun(model,iteration):
+    model.Endtime(end_time)
+    model.DoStochSim()
+    cumulative_outcomes = model.data_stochsim.getSpecies()
+    Incident = cumulative_outcomes[-1,9]
+    Recur = cumulative_outcomes[-1,13]
+    PoolOutcomes[iteration,0] = Incident
+    PoolOutcomes[iteration,1] = Recur
+    
+for i in range(0,n_runs):
+    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
+    CDIPoolRun(CDIPool,i)
+
+print PoolOutcomes
 
 
-
+    
 
 
