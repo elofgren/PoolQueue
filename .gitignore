@@ -4,3 +4,5 @@ _pys_parsetab.py
 *.psc
 
 *.pyc
+
+infix_tabmodule.py
