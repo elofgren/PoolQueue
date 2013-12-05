@@ -34,9 +34,10 @@ PoolTrajectories = numpy.zeros([8760,n_runs])
 def CDIPoolRun(model,iteration):
     model.Endtime(end_time)
     model.DoStochSim()
-    outcomes = model.data_stochsim.getSpecies()
-    Incident = outcomes[-1,9]
-    Recur = outcomes[-1,13]
+    model.GetRegularGrid(npoints=end_time)
+    outcomes = model.data_stochsim_grid.species
+    Incident = outcomes[9][0][-1]
+    Recur = outcomes[13][0][-1]
     PoolOutcomes[iteration,0] = Incident
     PoolOutcomes[iteration,1] = Recur
 
