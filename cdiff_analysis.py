@@ -19,7 +19,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 10
+n_runs = 3
 header = "Incident, Recur"
 
 #########################
@@ -29,17 +29,20 @@ header = "Incident, Recur"
 CDIPool = stochpy.SSA()
 CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
 PoolOutcomes = numpy.zeros([n_runs,2])
-PoolTrajectories = numpy.zeros([8760,n_runs])
+DTrajectories = numpy.zeros([end_time,n_runs])
+NTrajectories = numpy.zeros([end_time,n_runs])
 
 def CDIPoolRun(model,iteration):
     model.Endtime(end_time)
     model.DoStochSim()
-    model.GetRegularGrid(npoints=end_time)
+    model.GetRegularGrid(npoints=n_runs)
     outcomes = model.data_stochsim_grid.species
     Incident = outcomes[9][0][-1]
     Recur = outcomes[13][0][-1]
     PoolOutcomes[iteration,0] = Incident
     PoolOutcomes[iteration,1] = Recur
+    for t in range(0,n_runs):
+        DTrajectories[t,iteration] = outcomes[8][0][t]
 
 for i in range(0,n_runs):
     print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
@@ -47,7 +50,7 @@ for i in range(0,n_runs):
 
 print PoolOutcomes
 
-print PoolTrajectories
+print DTrajectories
 
     
 
