@@ -19,7 +19,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 300
+n_runs = 10
 
 #########################
 # Pool-based Entry/Exit #
@@ -28,8 +28,8 @@ n_runs = 300
 CDIPool = stochpy.SSA()
 CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
 PoolOutcomes = numpy.empty([n_runs,3])
-DTrajectories = numpy.empty([end_time,n_runs])
-NTrajectories = numpy.empty([end_time,n_runs])
+PoolDTrajectories = numpy.empty([end_time,n_runs])
+PoolNTrajectories = numpy.empty([end_time,n_runs])
 
 # Note - specific model outcome array references will change for each model file
 def CDIPoolRun(model,iteration):
@@ -47,8 +47,8 @@ def CDIPoolRun(model,iteration):
     PoolOutcomes[iteration,1] = Recur
     PoolOutcomes[iteration,2] = N
     for t in range(0,end_time):
-        DTrajectories[t,iteration] = outcomes[8][0][t]
-        NTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
+        PoolDTrajectories[t,iteration] = outcomes[8][0][t]
+        PoolNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
 
@@ -57,13 +57,16 @@ for i in range(0,n_runs):
     CDIPoolRun(CDIPool,i)
 
 print PoolOutcomes
-print DTrajectories
-print NTrajectories
+print PoolDTrajectories
+print PoolNTrajectories
 
-np.savetxt('CDI.csv',cdiresults,delimiter=',',header=header,comments='')
-np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
-np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
-np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
+numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+,header="Incident,Recur,N",comments='')
+numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+,header="D",comments='')
+numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+,header="N",comments='')
+
 
 
     
