@@ -20,7 +20,6 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 start_time = 0.0
 end_time = 8760
 n_runs = 300
-header = "Incident, Recur"
 
 #########################
 # Pool-based Entry/Exit #
