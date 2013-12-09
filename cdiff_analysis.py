@@ -19,7 +19,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 30
+n_runs = 5000
 
 #########################
 # Pool-based Entry/Exit #
@@ -63,6 +63,8 @@ numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
 numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
 ,header="N",comments='')
 
+print "C. difficile Pool Model - Runs Complete"
+
 ##########################
 # Queue-based Entry/Exit #
 ##########################
@@ -98,10 +100,6 @@ for i in range(0,n_runs):
     print "CDI Queue Iteration %i of %i" % (i+1,n_runs)
     CDIQueueRun(CDIQueue,i)
 
-print QueueOutcomes
-print QueueDTrajectories
-print QueueNTrajectories
-
 numpy.savetxt('CDIQueueOutcomes.csv',QueueOutcomes,delimiter=','
 ,header="Incident,Recur,N",comments='')
 numpy.savetxt('CDIQueueDTrajectories.csv',QueueDTrajectories,delimiter=','
@@ -109,7 +107,7 @@ numpy.savetxt('CDIQueueDTrajectories.csv',QueueDTrajectories,delimiter=','
 numpy.savetxt('CDIQueueNTrajectories.csv',QueueNTrajectories,delimiter=','
 ,header="N",comments='')
 
-
+print "C. difficile Queue Model - Runs Complete"
 
     
 
