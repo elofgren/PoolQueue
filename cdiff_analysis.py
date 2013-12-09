@@ -19,7 +19,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 3
+n_runs = 30
 
 #########################
 # Pool-based Entry/Exit #
@@ -52,24 +52,20 @@ def CDIPoolRun(model,iteration):
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
 
-#for i in range(0,n_runs):
-#    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
-#    CDIPoolRun(CDIPool,i)
+for i in range(0,n_runs):
+    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
+    CDIPoolRun(CDIPool,i)
 
-#print PoolOutcomes
-#print PoolDTrajectories
-#print PoolNTrajectories
+numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+,header="Incident,Recur,N",comments='')
+numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+,header="D",comments='')
+numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+,header="N",comments='')
 
-#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
-#,header="Incident,Recur,N",comments='')
-#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
-#,header="D",comments='')
-#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
-#,header="N",comments='')
-
-#########################
+##########################
 # Queue-based Entry/Exit #
-#########################
+##########################
 
 CDIQueue = stochpy.SSA()
 CDIQueue.Model(File='CDIqueue.psc', dir=os.getcwd())
@@ -106,12 +102,12 @@ print QueueOutcomes
 print QueueDTrajectories
 print QueueNTrajectories
 
-#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
-#,header="Incident,Recur,N",comments='')
-#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
-#,header="D",comments='')
-#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
-#,header="N",comments='')
+numpy.savetxt('CDIQueueOutcomes.csv',QueueOutcomes,delimiter=','
+,header="Incident,Recur,N",comments='')
+numpy.savetxt('CDIQueueDTrajectories.csv',QueueDTrajectories,delimiter=','
+,header="D",comments='')
+numpy.savetxt('CDIQueueNTrajectories.csv',QueueNTrajectories,delimiter=','
+,header="N",comments='')
 
 
 
