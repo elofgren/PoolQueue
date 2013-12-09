@@ -67,6 +67,52 @@ numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
 numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
 ,header="N",comments='')
 
+#########################
+# Queue-based Entry/Exit #
+#########################
+
+CDIQueue = stochpy.SSA()
+CDIQueue.Model(File='CDIqueue.psc', dir=os.getcwd())
+QueueOutcomes = numpy.empty([n_runs,3])
+QueueDTrajectories = numpy.empty([end_time,n_runs])
+QueueNTrajectories = numpy.empty([end_time,n_runs])
+
+# Note - specific model outcome array references will change for each model file
+def CDIQueueRun(model,iteration):
+    model.Endtime(end_time)
+    model.DoStochSim()
+    model.GetRegularGrid(npoints=end_time)
+    outcomes = model.data_stochsim_grid.species
+    Incident = outcomes[9][0][-1] # FIX ME
+    Recur = outcomes[13][0][-1] # FIX ME
+    # N = sum(Up,Ua,Ut,Cp,Ca,Ct,D)
+    N = (outcomes[2][0][-1] + outcomes[3][0][-1] + # FIX ME
+        outcomes[4][0][-1] + outcomes[5][0][-1] + outcomes[6][0][-1] + 
+        outcomes[8][0][-1] + outcomes[10][0][-1])
+    QueueOutcomes[iteration,0] = Incident
+    QueueOutcomes[iteration,1] = Recur
+    QueueOutcomes[iteration,2] = N
+    for t in range(0,end_time):
+        QueueDTrajectories[t,iteration] = outcomes[8][0][t] # FIX ME
+        QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] + # FIX ME
+        outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
+        outcomes[10][0][t])
+
+for i in range(0,n_runs):
+    print "CDI Queue Iteration %i of %i" % (i+1,n_runs)
+    CDIQueueRun(CDIPool,i)
+
+print QueueOutcomes
+print QueueDTrajectories
+print QueueNTrajectories
+
+#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+#,header="Incident,Recur,N",comments='')
+#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+#,header="D",comments='')
+#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+#,header="N",comments='')
+
 
 
     
