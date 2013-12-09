@@ -19,7 +19,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 10
+n_runs = 3
 
 #########################
 # Pool-based Entry/Exit #
@@ -52,20 +52,20 @@ def CDIPoolRun(model,iteration):
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
 
-for i in range(0,n_runs):
-    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
-    CDIPoolRun(CDIPool,i)
+#for i in range(0,n_runs):
+#    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
+#    CDIPoolRun(CDIPool,i)
 
-print PoolOutcomes
-print PoolDTrajectories
-print PoolNTrajectories
+#print PoolOutcomes
+#print PoolDTrajectories
+#print PoolNTrajectories
 
-numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
-,header="Incident,Recur,N",comments='')
-numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
-,header="D",comments='')
-numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
-,header="N",comments='')
+#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+#,header="Incident,Recur,N",comments='')
+#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+#,header="D",comments='')
+#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+#,header="N",comments='')
 
 #########################
 # Queue-based Entry/Exit #
@@ -84,23 +84,23 @@ def CDIQueueRun(model,iteration):
     model.GetRegularGrid(npoints=end_time)
     outcomes = model.data_stochsim_grid.species
     Incident = outcomes[9][0][-1] # FIX ME
-    Recur = outcomes[13][0][-1] # FIX ME
+    Recur = outcomes[11][0][-1] # FIX ME
     # N = sum(Up,Ua,Ut,Cp,Ca,Ct,D)
     N = (outcomes[2][0][-1] + outcomes[3][0][-1] + # FIX ME
         outcomes[4][0][-1] + outcomes[5][0][-1] + outcomes[6][0][-1] + 
-        outcomes[8][0][-1] + outcomes[10][0][-1])
+        outcomes[7][0][-1] + outcomes[10][0][-1])
     QueueOutcomes[iteration,0] = Incident
     QueueOutcomes[iteration,1] = Recur
     QueueOutcomes[iteration,2] = N
     for t in range(0,end_time):
         QueueDTrajectories[t,iteration] = outcomes[8][0][t] # FIX ME
         QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] + # FIX ME
-        outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
+        outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[7][0][t] +
         outcomes[10][0][t])
 
 for i in range(0,n_runs):
     print "CDI Queue Iteration %i of %i" % (i+1,n_runs)
-    CDIQueueRun(CDIPool,i)
+    CDIQueueRun(CDIQueue,i)
 
 print QueueOutcomes
 print QueueDTrajectories
