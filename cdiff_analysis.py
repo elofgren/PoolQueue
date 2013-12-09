@@ -27,8 +27,7 @@ n_runs = 300
 
 CDIPool = stochpy.SSA()
 CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
-PoolOutcomes = numpy.empty([n_runs,2])
-FinalSize = numpy.empty([n_runs,1])
+PoolOutcomes = numpy.empty([n_runs,3])
 DTrajectories = numpy.empty([end_time,n_runs])
 NTrajectories = numpy.empty([end_time,n_runs])
 
@@ -46,7 +45,7 @@ def CDIPoolRun(model,iteration):
         outcomes[8][0][-1] + outcomes[10][0][-1])
     PoolOutcomes[iteration,0] = Incident
     PoolOutcomes[iteration,1] = Recur
-    FinalSize[iteration,0] = N
+    PoolOutcomes[iteration,2] = N
     for t in range(0,end_time):
         DTrajectories[t,iteration] = outcomes[8][0][t]
         NTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
@@ -58,9 +57,14 @@ for i in range(0,n_runs):
     CDIPoolRun(CDIPool,i)
 
 print PoolOutcomes
-print FinalSize
 print DTrajectories
 print NTrajectories
+
+np.savetxt('CDI.csv',cdiresults,delimiter=',',header=header,comments='')
+np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
+np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
+np.savetxt('cdionlyresults20.csv',cdiresults,delimiter=',',header=header,comments='')
+
 
     
 
