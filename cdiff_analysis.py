@@ -52,16 +52,16 @@ def CDIPoolRun(model,iteration):
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
 
-#for i in range(0,n_runs):
-    #print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
-    #CDIPoolRun(CDIPool,i)
+for i in range(0,n_runs):
+    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
+    CDIPoolRun(CDIPool,i)
 
-#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
-#,header="Incident,Recur,N",comments='')
-#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
-#,header="D",comments='')
-#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
-#,header="N",comments='')
+numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+,header="Incident,Recur,N",comments='')
+numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+,header="D",comments='')
+numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+,header="N",comments='')
 
 print "C. difficile Pool Model - Runs Complete"
 
