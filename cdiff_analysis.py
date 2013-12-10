@@ -52,16 +52,16 @@ def CDIPoolRun(model,iteration):
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
 
-for i in range(0,n_runs):
-    print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
-    CDIPoolRun(CDIPool,i)
+#for i in range(0,n_runs):
+    #print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
+    #CDIPoolRun(CDIPool,i)
 
-numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
-,header="Incident,Recur,N",comments='')
-numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
-,header="D",comments='')
-numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
-,header="N",comments='')
+#numpy.savetxt('CDIPoolOutcomes.csv',PoolOutcomes,delimiter=','
+#,header="Incident,Recur,N",comments='')
+#numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
+#,header="D",comments='')
+#numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
+#,header="N",comments='')
 
 print "C. difficile Pool Model - Runs Complete"
 
@@ -81,17 +81,17 @@ def CDIQueueRun(model,iteration):
     model.DoStochSim()
     model.GetRegularGrid(npoints=end_time)
     outcomes = model.data_stochsim_grid.species
-    Incident = outcomes[9][0][-1] # FIX ME
-    Recur = outcomes[11][0][-1] # FIX ME
+    Incident = outcomes[9][0][-1]
+    Recur = outcomes[11][0][-1]
     # N = sum(Up,Ua,Ut,Cp,Ca,Ct,D)
-    N = (outcomes[2][0][-1] + outcomes[3][0][-1] + # FIX ME
+    N = (outcomes[2][0][-1] + outcomes[3][0][-1] +
         outcomes[4][0][-1] + outcomes[5][0][-1] + outcomes[6][0][-1] + 
         outcomes[7][0][-1] + outcomes[10][0][-1])
     QueueOutcomes[iteration,0] = Incident
     QueueOutcomes[iteration,1] = Recur
     QueueOutcomes[iteration,2] = N
     for t in range(0,end_time):
-        QueueDTrajectories[t,iteration] = outcomes[8][0][t] # FIX ME
+        QueueDTrajectories[t,iteration] = outcomes[6][0][t]
         QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] + # FIX ME
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[7][0][t] +
         outcomes[10][0][t])
