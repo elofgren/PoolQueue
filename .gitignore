@@ -6,3 +6,5 @@ _pys_parsetab.py
 *.pyc
 
 infix_tabmodule.py
+
+*.csv
