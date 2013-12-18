@@ -13,8 +13,10 @@ import numpy as numpy
 
 # Pull down most recent files from internet
 
-CDIPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/cdiff_FT.psc','CDIpool.psc')
-CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/PoolQueue-Models/cdiff_FT_queue.psc','CDIqueue.psc')	
+CDIPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Epidemiology/cdiff_FT.psc','CDIpool.psc')
+
+CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Epidemiology/cdiff_FT_queue.psc','CDIqueue.psc')	
+
 
 # General simulation parameters
 start_time = 0.0
