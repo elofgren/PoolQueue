@@ -94,7 +94,7 @@ def CDIQueueRun(model,iteration):
     QueueOutcomes[iteration,2] = N
     for t in range(0,end_time):
         QueueDTrajectories[t,iteration] = outcomes[6][0][t]
-        QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] + # FIX ME
+        QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[7][0][t] +
         outcomes[10][0][t])
 
