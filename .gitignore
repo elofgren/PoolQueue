@@ -7,4 +7,14 @@ _pys_parsetab.py
 
 infix_tabmodule.py
 
-*.csv
+CDIPoolDTrajectories.csv
+
+CDIPoolNTrajectories.csv
+
+CDIPoolOutcomes.csv
+
+CDIQueueDTrajectories.csv
+
+CDIQueueNTrajectories.csv
+
+CDIQueueOutcomes.csv

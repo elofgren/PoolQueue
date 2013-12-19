@@ -19,8 +19,8 @@ LVQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/log
 
 # General simulation parameters
 start_time = 0.0
-end_time = 10
-n_runs = 4
+end_time = 100
+n_runs = 5000
 
 #########################
 # Pool-based Entry/Exit #
