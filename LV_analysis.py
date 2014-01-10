@@ -1,7 +1,7 @@
-###################################
-# Lotka-Volterra Predation Model  #
-# Pool versus Queue Predation     #
-###################################
+####################################
+# Lotka-Volterra Competition Model #
+# Pool versus Queue Migration      #
+####################################
 
 # Module Imports
 import pumphandle as ph
@@ -11,16 +11,16 @@ import pylab as pl
 import numpy as numpy
 
 # Pull down most recent files from internet
-LVPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/logisticLV.psc',
-'LVpool.psc')
+LVPoolDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVcomp.psc',
+'LVcomp_pool.psc')
 
-LVQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/logisticLV_queue.psc'
-,'LVqueue.psc')	
+LVQueueDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVcomp_queue.psc'
+,'LVcomp_queue.psc')	
 
 # General simulation parameters
 start_time = 0.0
 end_time = 100
-n_runs = 5000
+n_runs = 50
 
 #########################
 # Pool-based Entry/Exit #
