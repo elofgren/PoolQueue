@@ -31,7 +31,6 @@ LVPool.Model(File='LVpool.psc', dir=os.getcwd())
 PoolRabbits = numpy.empty([end_time,n_runs])
 PoolFoxes = numpy.empty([end_time,n_runs])
 PoolTotal = numpy.empty([end_time,n_runs])
-PoolExtinction = numpy.empty([n_runs,1])
 
 # Note - specific model outcome array references will change for each model file
 def LVPoolRun(model,iteration):
@@ -44,10 +43,6 @@ def LVPoolRun(model,iteration):
     	PoolRabbits[t,iteration] = population[0][0][t]
     	PoolFoxes[t,iteration] = population[1][0][t]
     	PoolTotal[t,iteration] = PoolRabbits[t,iteration] + PoolFoxes[t,iteration]
-    if population[0][0][-1] + population[1][0][-1] == 0:
-    	PoolExtinction[iteration,0] = 1
-    else:
-    	PoolExtinction[iteration,0] = 0
 
 for i in range(0,n_runs):
     print "LV Pool Iteration %i of %i" % (i+1,n_runs)
@@ -56,7 +51,6 @@ for i in range(0,n_runs):
 numpy.savetxt('PoolRabbits.csv',PoolRabbits,delimiter=',',header="Rabbits",comments='')
 numpy.savetxt('PoolFoxes.csv',PoolFoxes,delimiter=',',header="Foxes",comments='')
 numpy.savetxt('PoolWholeLV.csv',PoolTotal,delimiter=',',header="N",comments='')
-numpy.savetxt('PoolExtinct.csv',PoolExtinction,delimiter=',',header="Extinct",comments='')
 
 print "LV Pool Model - Runs Complete"
 
@@ -69,7 +63,6 @@ LVQueue.Model(File='LVqueue.psc', dir=os.getcwd())
 QueueRabbits = numpy.empty([end_time,n_runs])
 QueueFoxes = numpy.empty([end_time,n_runs])
 QueueTotal = numpy.empty([end_time,n_runs])
-QueueExtinction = numpy.empty([n_runs,1])
 
 # Note - specific model outcome array references will change for each model file
 def LVQueueRun(model,iteration):
@@ -82,10 +75,6 @@ def LVQueueRun(model,iteration):
     	QueueRabbits[t,iteration] = population[0][0][t]
     	QueueFoxes[t,iteration] = population[1][0][t]
     	QueueTotal[t,iteration] = PoolRabbits[t,iteration] + PoolFoxes[t,iteration]
-    if population[0][0][-1] + population[1][0][-1] == 0:
-    	QueueExtinction[iteration,0] = 1
-    else:
-    	QueueExtinction[iteration,0] = 0
 
 for i in range(0,n_runs):
     print "LV Queue Iteration %i of %i" % (i+1,n_runs)
@@ -94,7 +83,6 @@ for i in range(0,n_runs):
 numpy.savetxt('QueueRabbits.csv',QueueRabbits,delimiter=',',header="Rabbits",comments='')
 numpy.savetxt('QueueFoxes.csv',QueueFoxes,delimiter=',',header="Foxes",comments='')
 numpy.savetxt('QueueWholeLV.csv',QueueTotal,delimiter=',',header="N",comments='')
-numpy.savetxt('QueueExtinct.csv',QueueExtinction,delimiter=',',header="Extinct",comments='')
 
 print "LV Queue Model - Runs Complete"
 
