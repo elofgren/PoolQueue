@@ -22,6 +22,43 @@ start_time = 0.0
 end_time = 100
 n_runs = 50
 
+########################
+# Pool-based Migration #
+########################
+
+LVpool = stochpy.SSA()
+LVpool.Model(File='LVcomp_pool.psc', dir = os.getcwd())
+PoolInvader = numpy.empty([end_time,n_runs])
+PoolNative = numpy.empty([end_time,n_runs])
+PoolTotal = numpy.empty([end_time,n_runs])
+
+def LVPoolRun(model,iteration):
+    model.Endtime(end_time)
+    model.DoStochSim()
+    model.GetRegularGrid(npoints=end_time*10)
+    population = model.data_stohsim_grid.species
+    for t in range(0,end_time):
+        PoolInvader[t,iteration] = population[0][0][t]
+        PoolNative[t,iteration] = population[1][0][t]
+        PoolTotal[t,iteration] = PoolInvader[t,iteration]+PoolNative[t,iteration]
+
+for i in range(0,n_runs):
+    print "LV Pool Iteration %i of %i" % (i+1,n_runs)
+
+numpy.savetxt('PoolInvader.csv',PoolInvader,delimiter=',',header="Invader",comments='')
+numpy.savetxt('PoolNative.csv',PoolNative,delimiter=',',header="Native",comments='')
+numpy.savetxt('PoolTotal.csv',PoolTotal,delimiter=',',header="TotalN",comments='')
+
+print "LV Pool Model - Runs Complete"
+    
+
+
+
+
+
+
+
+
 #########################
 # Pool-based Entry/Exit #
 #########################
