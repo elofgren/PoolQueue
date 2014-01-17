@@ -29,6 +29,7 @@ LVpool.Model(File='LVpool.psc', dir = os.getcwd())
 PoolPrey = numpy.empty([end_time,n_runs])
 PoolPredator = numpy.empty([end_time,n_runs])
 PoolTotal = numpy.empty([end_time,n_runs])
+PoolExtinction = numpy.empty([n_runs,3])
 
 def LVPoolRun(model,iteration):
     model.Endtime(end_time)
@@ -39,14 +40,19 @@ def LVPoolRun(model,iteration):
         PoolPrey[t,iteration] = population[0][0][t]
         PoolPredator[t,iteration] = population[1][0][t]
         PoolTotal[t,iteration] = PoolPrey[t,iteration]+PoolPredator[t,iteration]
+    if population[0][0][-1] == 0:
+        PoolExtinction[0,iteration] == 1
+    else:
+        PoolExtinction[0,iteration] == 0
 
 for i in range(0,n_runs):
 	LVPoolRun(LVpool,i)
 	print "LV Pool Iteration %i of %i" % (i+1,n_runs)
 
-numpy.savetxt('PoolPrey.csv',PoolPrey,delimiter=',',header="Prey",comments='')
-numpy.savetxt('PoolPredator.csv',PoolPredator,delimiter=',',header="Pred",comments='')
-numpy.savetxt('PoolTotal.csv',PoolTotal,delimiter=',',header="TotalN",comments='')
+numpy.savetxt('PoolPrey.csv',PoolPrey,delimiter=',',header="",comments='')
+numpy.savetxt('PoolPredator.csv',PoolPredator,delimiter=',',header="",comments='')
+numpy.savetxt('PoolTotal.csv',PoolTotal,delimiter=',',header="",comments='')
+numpy.savetxt('LVpoolExtinction.csv',PoolExtinction,delimiter=',',header="Prey,Predator,N",comments='')
 
 print "LV Pool Model - Runs Complete"
     
@@ -59,6 +65,8 @@ LVqueue.Model(File='LVqueue.psc', dir = os.getcwd())
 QueuePrey = numpy.empty([end_time,n_runs])
 QueuePredator = numpy.empty([end_time,n_runs])
 QueueTotal = numpy.empty([end_time,n_runs])
+QueueExtinction = numpy.empty([n_runs,3])
+
 
 def LVQueueRun(model,iteration):
     model.Endtime(end_time)
@@ -77,5 +85,7 @@ for i in range(0,n_runs):
 numpy.savetxt('QueuePrey.csv',QueuePrey,delimiter=',',header="Prey",comments='')
 numpy.savetxt('QueuePredator.csv',QueuePredator,delimiter=',',header="Predator",comments='')
 numpy.savetxt('QueueTotal.csv',QueueTotal,delimiter=',',header="TotalN",comments='')
+numpy.savetxt('LVqueueExtinction.csv',QueueExtinction,delimiter=',',header="Prey,Predator,N",comments='')
+
 
 print "LV Queue Model - Runs Complete"
