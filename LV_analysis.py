@@ -11,11 +11,9 @@ import pylab as pl
 import numpy as numpy
 
 # Pull down most recent files from internet
-LVPoolDownload = ph.NetDrop(
-'https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary.psc','LVpool.psc')
+LVPoolDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary.psc','LVpool.psc')
 
-LVQueueDownload = ph.NetDrop
-('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary_queue.psc','LVqueue.psc')	
+LVQueueDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary_queue.psc','LVqueue.psc')	
 
 # General simulation parameters
 start_time = 0.0
@@ -43,7 +41,8 @@ def LVPoolRun(model,iteration):
         PoolTotal[t,iteration] = PoolPrey[t,iteration]+PoolPredator[t,iteration]
 
 for i in range(0,n_runs):
-    print "LV Pool Iteration %i of %i" % (i+1,n_runs)
+	LVPoolRun(LVpool,i)
+	print "LV Pool Iteration %i of %i" % (i+1,n_runs)
 
 numpy.savetxt('PoolPrey.csv',PoolPrey,delimiter=',',header="Prey",comments='')
 numpy.savetxt('PoolPredator.csv',PoolPredator,delimiter=',',header="Pred",comments='')
@@ -72,7 +71,8 @@ def LVQueueRun(model,iteration):
         QueueTotal[t,iteration] = QueuePrey[t,iteration]+QueuePredator[t,iteration]
 
 for i in range(0,n_runs):
-    print "LV Queue Iteration %i of %i" % (i+1,n_runs)
+	LVQueueRun(LVqueue,i)
+	print "LV Queue Iteration %i of %i" % (i+1,n_runs)
 
 numpy.savetxt('QueuePrey.csv',QueuePrey,delimiter=',',header="Prey",comments='')
 numpy.savetxt('QueuePredator.csv',QueuePredator,delimiter=',',header="Predator",comments='')
