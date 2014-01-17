@@ -41,9 +41,17 @@ def LVPoolRun(model,iteration):
         PoolPredator[t,iteration] = population[1][0][t]
         PoolTotal[t,iteration] = PoolPrey[t,iteration]+PoolPredator[t,iteration]
     if population[0][0][-1] == 0:
-        PoolExtinction[0,iteration] == 1
+        PoolExtinction[iteration,0] = 1
     else:
-        PoolExtinction[0,iteration] == 0
+        PoolExtinction[iteration,0] = 0
+    if population[1][0][-1] ==0:
+    	PoolExtinction[iteration,1] = 1
+    else:
+    	PoolExtinction[iteration,1] = 0
+    if population[0][0][-1] + population[1][0][-1] == 0:
+    	PoolExtinction[iteration,2] = 1
+    else:
+    	PoolExtinction[iteration,2] = 0
 
 for i in range(0,n_runs):
 	LVPoolRun(LVpool,i)
@@ -77,6 +85,18 @@ def LVQueueRun(model,iteration):
         QueuePrey[t,iteration] = population[0][0][t]
         QueuePredator[t,iteration] = population[1][0][t]
         QueueTotal[t,iteration] = QueuePrey[t,iteration]+QueuePredator[t,iteration]
+	if population[0][0][-1] == 0:
+		QueueExtinction[iteration,0] = 1
+    else:
+        QueueExtinction[iteration,0] = 0
+    if population[1][0][-1] ==0:
+    	QueueExtinction[iteration,1] = 1
+    else:
+    	QueueExtinction[iteration,1] = 0
+    if population[0][0][-1] + population[1][0][-1] == 0:
+    	QueueExtinction[iteration,2] = 1
+    else:
+    	QueueExtinction[iteration,2] = 0
 
 for i in range(0,n_runs):
 	LVQueueRun(LVqueue,i)
