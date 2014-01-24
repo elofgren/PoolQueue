@@ -21,7 +21,7 @@ CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Epidemiolo
 # General simulation parameters
 start_time = 0.0
 end_time = 8760
-n_runs = 5000
+n_runs = 2500
 
 #########################
 # Pool-based Entry/Exit #
@@ -32,6 +32,7 @@ CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
 PoolOutcomes = numpy.empty([n_runs,3])
 PoolDTrajectories = numpy.empty([end_time,n_runs])
 PoolNTrajectories = numpy.empty([end_time,n_runs])
+PoolExtinction = numpy.empty([n_runs,1])
 
 # Note - specific model outcome array references will change for each model file
 def CDIPoolRun(model,iteration):
@@ -53,6 +54,10 @@ def CDIPoolRun(model,iteration):
         PoolNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[8][0][t] +
         outcomes[10][0][t])
+    if PoolNTrajectories[-1,iteration] == 0:
+    	PoolExtinction[iteration,0] = 1
+    else:
+    	PoolExtinction[iteration,0] = 0
 
 for i in range(0,n_runs):
     print "CDI Pool Iteration %i of %i" % (i+1,n_runs)
@@ -64,6 +69,7 @@ numpy.savetxt('CDIPoolDTrajectories.csv',PoolDTrajectories,delimiter=','
 ,header="D",comments='')
 numpy.savetxt('CDIPoolNTrajectories.csv',PoolNTrajectories,delimiter=','
 ,header="N",comments='')
+numpy.savetxt('CDIPoolExtinction.csv',PoolExtinction,delimiter=',',header="Extinction",comments='')
 
 print "C. difficile Pool Model - Runs Complete"
 
@@ -76,6 +82,7 @@ CDIQueue.Model(File='CDIqueue.psc', dir=os.getcwd())
 QueueOutcomes = numpy.empty([n_runs,3])
 QueueDTrajectories = numpy.empty([end_time,n_runs])
 QueueNTrajectories = numpy.empty([end_time,n_runs])
+QueueExtinction = numpy.empty([n_runs,1])
 
 # Note - specific model outcome array references will change for each model file
 def CDIQueueRun(model,iteration):
@@ -97,6 +104,10 @@ def CDIQueueRun(model,iteration):
         QueueNTrajectories[t,iteration] = (outcomes[2][0][t] + outcomes[3][0][t] +
         outcomes[4][0][t] + outcomes[5][0][t] + outcomes[6][0][t] + outcomes[7][0][t] +
         outcomes[10][0][t])
+    if QueueNTrajectories[-1,iteration] == 0:
+    	QueueExtinction[iteration,0] = 1
+    else:
+    	QueueExtinction[iteration,0] = 0
 
 for i in range(0,n_runs):
     print "CDI Queue Iteration %i of %i" % (i+1,n_runs)
@@ -108,9 +119,6 @@ numpy.savetxt('CDIQueueDTrajectories.csv',QueueDTrajectories,delimiter=','
 ,header="D",comments='')
 numpy.savetxt('CDIQueueNTrajectories.csv',QueueNTrajectories,delimiter=','
 ,header="N",comments='')
+numpy.savetxt('CDIQueueExtinction.csv',QueueExtinction,delimiter=',',header="Extinction",comments='')
 
 print "C. difficile Queue Model - Runs Complete"
-
-    
-
-

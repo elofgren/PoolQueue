@@ -18,7 +18,7 @@ LVQueueDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology
 # General simulation parameters
 start_time = 0.0
 end_time = 100
-n_runs = 50
+n_runs = 2500
 
 ######################################
 # Pool-based Birth/Death of Predator #
