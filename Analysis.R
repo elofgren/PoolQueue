@@ -19,7 +19,7 @@ queue_trials <- nrow(QueueExtinction)
 extinctprey_pool <- sum(PoolExtinction$Prey)
 extinctprey_queue <- sum(QueueExtinction$Prey)
 
-PreyExtinctTest <- prop.test(x = c(extinctprey_pool, extinctprey_queue), n = c(pool_trials,queue_trials))
+PreyExtinctTest <- binom.test(x = c(extinctprey_pool, extinctprey_queue), n = c(pool_trials,queue_trials))
 PreyExtinctDiff <- (extinctprey_pool/pool_trials) - (extinctprey_queue/queue_trials)
 PreyExtinctCI <- PreyExtinctTest$conf.int
 PreyExtinctP <- PreyExtinctTest$p.value
@@ -28,7 +28,7 @@ PreyExtinctP <- PreyExtinctTest$p.value
 extinctpred_pool <- sum(PoolExtinction$Predator)
 extinctpred_queue <- sum(QueueExtinction$Predator)
 
-PredExtinctTest <- prop.test(x = c(extinctpred_pool, extinctpred_queue), n = c(pool_trials,queue_trials))
+PredExtinctTest <- binom.test(x = c(extinctpred_pool, extinctpred_queue), n = c(pool_trials,queue_trials))
 PredExtinctDiff <- (extinctpred_pool/pool_trials) - (extinctpred_queue/queue_trials)
 PredExtinctCI <- PredExtinctTest$conf.int
 PredExtinctP <- PredExtinctTest$p.value
@@ -37,7 +37,7 @@ PredExtinctP <- PredExtinctTest$p.value
 extinctN_pool <- sum(PoolExtinction$N)
 extinctN_queue <- sum(QueueExtinction$N)
 
-NExtinctTest <- prop.test(x = c(extinctN_pool, extinctN_queue), n = c(pool_trials,queue_trials))
+NExtinctTest <- binom.test(x = c(extinctN_pool, extinctN_queue), n = c(pool_trials,queue_trials))
 NExtinctDiff <- (extinctN_pool/pool_trials) - (extinctN_queue/queue_trials)
 NExtinctCI <- NExtinctTest$conf.int
 NExtinctP <- NExtinctTest$p.value
@@ -72,7 +72,7 @@ haiqueue_trials <- nrow(HAIQueueExtinction)
 haiextinct_pool <- sum(HAIPoolExtinction$Extinction)
 haiextinct_queue <- sum(HAIQueueExtinction$Extinction)
 
-HAIExtinctTest <- prop.test(x = c(haiextinct_pool, haiextinct_queue), n = c(haipool_trials,haiqueue_trials))
+HAIExtinctTest <- binom.test(x = c(haiextinct_pool, haiextinct_queue), n = c(haipool_trials,haiqueue_trials))
 HAIExtinctDiff <- (haiextinct_pool/haipool_trials) - (haiextinct_queue/haiqueue_trials)
 HAIExtinctCI <- HAIExtinctTest$conf.int
 HAIExtinctP <- HAIExtinctTest$p.value
