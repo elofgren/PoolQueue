@@ -10,6 +10,8 @@ import stochpy
 import pylab as pl
 import numpy as numpy
 
+workingdir = os.getcwd()
+
 # Pull down most recent files from internet
 LVPoolDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary.psc','LVpool.psc')
 
@@ -25,7 +27,7 @@ n_runs = 2500
 ######################################
 
 LVpool = stochpy.SSA()
-LVpool.Model(File='LVpool.psc', dir = os.getcwd())
+LVpool.Model(File='LVpool.psc', dir = workingdir)
 PoolPrey = numpy.empty([end_time,n_runs])
 PoolPredator = numpy.empty([end_time,n_runs])
 PoolTotal = numpy.empty([end_time,n_runs])
@@ -80,7 +82,7 @@ print "LV Pool Model - Runs Complete"
 #######################################
 
 LVqueue = stochpy.SSA()
-LVqueue.Model(File='LVqueue.psc', dir = os.getcwd())
+LVqueue.Model(File='LVqueue.psc', dir = workingdir)
 QueuePrey = numpy.empty([end_time,n_runs])
 QueuePredator = numpy.empty([end_time,n_runs])
 QueueTotal = numpy.empty([end_time,n_runs])
@@ -129,3 +131,15 @@ numpy.savetxt('LVqueueMedian.csv',QueueMedian,delimiter=',', header="Prey,Predat
 numpy.savetxt('LVqueueMean.csv',QueueMean,delimiter=',',header="Prey,Predator,N",comments='')
 
 print "LV Queue Model - Runs Complete"
+
+#######################
+# Deterministic Model #
+#######################
+
+import pysces
+detLV = pysces.model('LVpool.psc', dir=workingdir)
+detLV.doSim(end=end_time,points=end_time*10)
+detLVTS = detLV.data_sim.getSpecies()
+detLVHead = "Time," + ','.join(detLV.species)
+os.chdir(workingdir)
+numpy.savetxt('LVDeterministic.csv',detLVTS,delimiter=',',header=detLVHead,comments='')
