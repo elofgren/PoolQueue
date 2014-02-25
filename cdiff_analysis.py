@@ -5,16 +5,17 @@
 ###################################
 
 # Module Imports
-import pumphandle as ph
 import os
+import pumphandle as ph
 import stochpy
 import pylab as pl
 import numpy as numpy
 
+workingdir = os.getcwd()
+
 # Pull down most recent files from internet
 
 CDIPoolDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Epidemiology/cdiff_FT.psc','CDIpool.psc')
-
 CDIQueueDrop = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Epidemiology/cdiff_FT_queue.psc','CDIqueue.psc')	
 
 
@@ -28,7 +29,7 @@ n_runs = 2500
 #########################
 
 CDIPool = stochpy.SSA()
-CDIPool.Model(File='CDIpool.psc', dir=os.getcwd())
+CDIPool.Model(File='CDIpool.psc', dir=workingdir)
 PoolOutcomes = numpy.empty([n_runs,3])
 PoolDTrajectories = numpy.empty([end_time,n_runs])
 PoolNTrajectories = numpy.empty([end_time,n_runs])
@@ -78,7 +79,7 @@ print "C. difficile Pool Model - Runs Complete"
 ##########################
 
 CDIQueue = stochpy.SSA()
-CDIQueue.Model(File='CDIqueue.psc', dir=os.getcwd())
+CDIQueue.Model(File='CDIqueue.psc', dir=workingdir)
 QueueOutcomes = numpy.empty([n_runs,3])
 QueueDTrajectories = numpy.empty([end_time,n_runs])
 QueueNTrajectories = numpy.empty([end_time,n_runs])
@@ -122,3 +123,15 @@ numpy.savetxt('CDIQueueNTrajectories.csv',QueueNTrajectories,delimiter=','
 numpy.savetxt('CDIQueueExtinction.csv',QueueExtinction,delimiter=',',header="Extinction",comments='')
 
 print "C. difficile Queue Model - Runs Complete"
+
+#######################
+# Deterministic Model #
+#######################
+
+import pysces
+detCDI = pysces.model('CDIpool.psc', dir=workingdir)
+detCDI.doSim(end=end_time,points=end_time*10)
+detTS = detCDI.data_sim.getSpecies()
+detHead = "Time," + ','.join(detCDI.species)
+os.chdir(workingdir)
+numpy.savetxt('CDIDeterministic.csv',detTS,delimiter=',',header=detHead,comments='')
