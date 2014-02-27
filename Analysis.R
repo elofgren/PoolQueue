@@ -9,8 +9,8 @@ library(plyr)
 
 ### Analysis of Ecology Results ###
 ## C- and N- Extinction Probability
-PoolExtinction <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVpoolExtinction.csv"))
-QueueExtinction <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVqueueExtinction.csv"))
+PoolExtinction <- as.data.frame(read.csv("LVpoolExtinction.csv"))
+QueueExtinction <- as.data.frame(read.csv("LVqueueExtinction.csv"))
 
 # Prey
 pool_trials <- nrow(PoolExtinction)
@@ -43,8 +43,8 @@ NExtinctCI <- NExtinctTest$conf.int
 NExtinctP <- NExtinctTest$p.value
 
 ## Mean and Median Species Populations
-PoolMeans <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVpoolMean.csv"))
-QueueMeans <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVqueueMean.csv"))
+PoolMeans <- as.data.frame(read.csv("LVpoolMean.csv"))
+QueueMeans <- as.data.frame(read.csv("LVqueueMean.csv"))
 PoolMeans$Method <- factor("Pool")
 QueueMeans$Method <- factor("Queue")
 Means <- rbind(PoolMeans,QueueMeans)
@@ -52,8 +52,8 @@ PreyMeansTest <- kruskal.test(Means$Prey,Means$Method)
 PredMeansTest <- kruskal.test(Means$Predator,Means$Method)
 NMeansTest <- kruskal.test(Means$N,Means$Method)
 
-PoolMedians <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVpoolMedian.csv"))
-QueueMedians <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/LVqueueMedian.csv"))
+PoolMedians <- as.data.frame(read.csv("LVpoolMedian.csv"))
+QueueMedians <- as.data.frame(read.csv("LVqueueMedian.csv"))
 PoolMedians$Method <- factor("Pool")
 QueueMedians$Method <- factor("Queue")
 Medians <- rbind(PoolMedians,QueueMedians)
@@ -62,8 +62,8 @@ PredMedianTest <- kruskal.test(Medians$Predator,Medians$Method)
 NMedianTest <- kruskal.test(Medians$N,Medians$Method)
 
 ### Analysis of HAI Results ###
-HAIPoolExtinction <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/CDIPoolExtinction.csv"))
-HAIQueueExtinction <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/CDIQueueExtinction.csv"))
+HAIPoolExtinction <- as.data.frame(read.csv("CDIPoolExtinction.csv"))
+HAIQueueExtinction <- as.data.frame(read.csv("CDIQueueExtinction.csv"))
 
 # N-extinction
 haipool_trials <- nrow(HAIPoolExtinction)
@@ -78,8 +78,8 @@ HAIExtinctCI <- HAIExtinctTest$conf.int
 HAIExtinctP <- HAIExtinctTest$p.value
 
 # Outcomes
-HAIPoolOutcomes <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/CDIPoolOutcomes.csv"))
-HAIQueueOutcomes <- as.data.frame(read.csv("~/Documents/Code/PoolQueue/CDIQueueOutcomes.csv"))
+HAIPoolOutcomes <- as.data.frame(read.csv("CDIPoolOutcomes.csv"))
+HAIQueueOutcomes <- as.data.frame(read.csv("CDIQueueOutcomes.csv"))
 HAIPoolOutcomes$Method <- factor("Pool")
 HAIQueueOutcomes$Method <- factor("Queue")
 HAIOutcomes <- rbind(HAIPoolOutcomes,HAIQueueOutcomes)
