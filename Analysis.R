@@ -85,3 +85,11 @@ HAIQueueOutcomes$Method <- factor("Queue")
 HAIOutcomes <- rbind(HAIPoolOutcomes,HAIQueueOutcomes)
 IncidentTest <- kruskal.test(HAIOutcomes$Incident,HAIOutcomes$Method)
 RecurTest <- kruskal.test(HAIOutcomes$Recur,HAIOutcomes$Method)
+
+### Analysis of Computation Time ###
+CompTime <- as.data.frame(read.csv("RunTimes.csv"))
+LVComp <- CompTime[which(CompTime$Model=="LV"),]
+CDIComp <- CompTime[which(CompTime$Model=="CDI"),]
+LVCompTest <- kruskal.test(LVComp$Time ~ LVComp$Method)
+CDICompTest <- kruskal.test(CDIComp$Time ~ CDIComp$Method)
+
