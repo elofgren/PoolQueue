@@ -6,6 +6,7 @@
 library(ggplot2)
 library(gridExtra)
 library(plyr)
+library(vioplot)
 
 ### Analysis of Ecology Results ###
 ## C- and N- Extinction Probability
@@ -94,16 +95,19 @@ LVCompTest <- kruskal.test(LVComp$Time ~ LVComp$Method)
 CDICompTest <- kruskal.test(CDIComp$Time ~ CDIComp$Method)
 
 ### Plot Code ###
-# Figure 1 - 
 
 # Figure 2 - 
 
-# Figure 3 - 
+# Figure 3 - Cumultive incident and recurrent cases
+par(mfrow=c(1,2))
+vioplot(HAIPoolOutcomes$Recur,HAIQueueOutcomes$Recur,names=c("Pool","Queue"),col="Grey",drawRect=FALSE)
+title("Recurrent C. difficile", ylab="Cases")
+vioplot(HAIPoolOutcomes$Incident,HAIQueueOutcomes$Incident,names=c("Pool","Queue"), col="Grey",drawRect=FALSE)
+title("Incident C. difficile", ylab="Cases")
 
 # Figure 4 - 
 
-# Figure 5 - Computational Runtime Densities
-library(vioplot)
+# Figure 5 - Computational runtimes
 LVCompP <- subset(LVComp, Method=="Pool")$Time
 LVCompQ <- subset(LVComp, Method=="Queue")$Time
 CDICompP <- subset(CDIComp, Method=="Pool")$Time
