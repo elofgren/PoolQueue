@@ -105,9 +105,7 @@ title("Recurrent C. difficile", ylab="Cases")
 vioplot(HAIPoolOutcomes$Incident,HAIQueueOutcomes$Incident,names=c("Pool","Queue"), col="Grey",drawRect=FALSE)
 title("Incident C. difficile", ylab="Cases")
 
-# Figure 4 - 
-
-# Figure 5 - Computational runtimes
+# Figure 4 - Computational runtimes
 LVCompP <- subset(LVComp, Method=="Pool")$Time
 LVCompQ <- subset(LVComp, Method=="Queue")$Time
 CDICompP <- subset(CDIComp, Method=="Pool")$Time
