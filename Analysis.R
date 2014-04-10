@@ -93,3 +93,31 @@ CDIComp <- CompTime[which(CompTime$Model=="CDI"),]
 LVCompTest <- kruskal.test(LVComp$Time ~ LVComp$Method)
 CDICompTest <- kruskal.test(CDIComp$Time ~ CDIComp$Method)
 
+### Plot Code ###
+# Figure 1 - 
+
+# Figure 2 - 
+
+# Figure 3 - 
+
+# Figure 4 - 
+
+# Figure 5 - Computational Runtime Densities
+
+LVCompPoolDen <- density(LVComp[which(LVComp$Method=="Pool"),])
+
+
+
+ICUcohort <- subset(cohort, ICU == 1)
+NICUcohort <- subset(cohort, ICU == 0)
+ICUden <- density(ICUcohort$Age)
+NICUden <- density(NICUcohort$Age)
+par(mar=c(5.1,5.1,4.1,2.1))
+plot(ICUden, col="black", lwd = 3,xlab="Age (Years)",ylab = "Density", main="", cex.lab=1.5,axes=FALSE)
+axis(2, cex.axis=1.3, at=c(0.005,0.015,0.025),lwd=1)
+axis(1, cex.axis=1.3)
+box()
+lines(NICUden, col="grey75", lwd = 3)
+legend("topright", c("ICU","Non-ICU"), lwd=3, col=c("black","grey75"),
+       lty=c(1,1), pch=c(NA,NA), bty='n',inset=0.02, cex=1.3)
+
