@@ -3,9 +3,6 @@
 ################################################################
 
 # Import Packages
-library(ggplot2)
-library(gridExtra)
-library(plyr)
 library(vioplot)
 
 ### Analysis of Ecology Results ###
@@ -96,16 +93,54 @@ CDICompTest <- kruskal.test(CDIComp$Time ~ CDIComp$Method)
 
 ### Plot Code ###
 
-# Figure 2 - 
+## Figure 2 - Trajectories for predators and prey
+PoolPreyTrajectory <- read.csv(("PoolPrey.csv"),header=F)
+PPreyT <- as.matrix(PoolPreyTrajectory)
+PoolPredTrajectory <- read.csv(("PoolPredator.csv"),header=F)
+PPredT <- as.matrix(PoolPredTrajectory)
+QueuePreyTrajectory <- read.csv(("QueuePrey.csv"),header=F)
+QPreyT <- as.matrix(QueuePreyTrajectory)
+QueuePredTrajectory <- read.csv(("QueuePredator.csv"),header=F)
+QPredT <- as.matrix(QueuePredTrajectory)
+Deterministic <- read.csv(("LVDeterministic.csv"),header=T)
 
-# Figure 3 - Cumultive incident and recurrent cases
+sim_length <- 99 # Number of observations in timeseries - 1
+realizations <- 250 # How many realizations of the model were run
+
+par(mfrow=c(1,1))
+
+# Plot Trajectories for Prey
+plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="", ylab="Prey", ylim=c(0,11))
+for (i in 1:realizations) {
+  lines(0:sim_length, PPreyT [ ,i],lwd=2,col=rgb(0,100,0,20,maxColorValue=255))
+}
+for (k in 1:realizations) {
+  lines(0:sim_length, QPreyT [ ,k],lwd=2,col=rgb(0,0,255,20,maxColorValue=255))
+}
+lines(Deterministic$Time,Deterministic$prey,lwd=4,col="Black",lty=2)
+legend("top",c("Pool","Queue","Deterministic"),lwd=c(2,2,3),col=c("Dark Green","Blue","Black"),lty=c(1,1,2),bty='n', horiz=T)
+
+# Plot Trajectories for Predators
+plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="Time", ylab="Predators", ylim=c(0,16))
+for (i in 1:realizations) {
+  lines(0:sim_length, PPredT [ ,i],lwd=2,col=rgb(0,100,0,20,maxColorValue=255))
+}
+for (k in 1:realizations) {
+  lines(0:sim_length, QPredT [ ,k],lwd=2,col=rgb(0,0,255,20,maxColorValue=255))
+}
+lines(Deterministic$Time,Deterministic$prey,lwd=4,col="Black",lty=2)
+
+
+
+
+## Figure 3 - Cumultive incident and recurrent cases
 par(mfrow=c(1,2))
 vioplot(HAIPoolOutcomes$Recur,HAIQueueOutcomes$Recur,names=c("Pool","Queue"),col="Grey",drawRect=FALSE)
 title("Recurrent C. difficile", ylab="Cases")
 vioplot(HAIPoolOutcomes$Incident,HAIQueueOutcomes$Incident,names=c("Pool","Queue"), col="Grey",drawRect=FALSE)
 title("Incident C. difficile", ylab="Cases")
 
-# Figure 4 - Computational runtimes
+## Figure 4 - Computational runtimes
 LVCompP <- subset(LVComp, Method=="Pool")$Time
 LVCompQ <- subset(LVComp, Method=="Queue")$Time
 CDICompP <- subset(CDIComp, Method=="Pool")$Time
