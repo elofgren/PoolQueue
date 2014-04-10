@@ -93,7 +93,7 @@ CDICompTest <- kruskal.test(CDIComp$Time ~ CDIComp$Method)
 
 ### Plot Code ###
 
-## Figure 2 - Trajectories for predators and prey
+## Figures 2 & 3 - Trajectories for predators and prey
 PoolPreyTrajectory <- read.csv(("PoolPrey.csv"),header=F)
 PPreyT <- as.matrix(PoolPreyTrajectory)
 PoolPredTrajectory <- read.csv(("PoolPredator.csv"),header=F)
@@ -108,9 +108,8 @@ sim_length <- 99 # Number of observations in timeseries - 1
 realizations <- 250 # How many realizations of the model were run
 
 par(mfrow=c(1,1))
-
 # Plot Trajectories for Prey
-plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="", ylab="Prey", ylim=c(0,11))
+plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="", ylab="Prey", ylim=c(0,11.5))
 for (i in 1:realizations) {
   lines(0:sim_length, PPreyT [ ,i],lwd=2,col=rgb(0,100,0,20,maxColorValue=255))
 }
@@ -121,26 +120,24 @@ lines(Deterministic$Time,Deterministic$prey,lwd=4,col="Black",lty=2)
 legend("top",c("Pool","Queue","Deterministic"),lwd=c(2,2,3),col=c("Dark Green","Blue","Black"),lty=c(1,1,2),bty='n', horiz=T)
 
 # Plot Trajectories for Predators
-plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="Time", ylab="Predators", ylim=c(0,16))
+plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="Time", ylab="Predators", ylim=c(0,17))
 for (i in 1:realizations) {
   lines(0:sim_length, PPredT [ ,i],lwd=2,col=rgb(0,100,0,20,maxColorValue=255))
 }
 for (k in 1:realizations) {
   lines(0:sim_length, QPredT [ ,k],lwd=2,col=rgb(0,0,255,20,maxColorValue=255))
 }
-lines(Deterministic$Time,Deterministic$prey,lwd=4,col="Black",lty=2)
+lines(Deterministic$Time,Deterministic$predator,lwd=4,col="Black",lty=2)
+legend("top",c("Pool","Queue","Deterministic"),lwd=c(2,2,3),col=c("Dark Green","Blue","Black"),lty=c(1,1,2),bty='n', horiz=T)
 
-
-
-
-## Figure 3 - Cumultive incident and recurrent cases
+## Figure 4 - Cumultive incident and recurrent cases
 par(mfrow=c(1,2))
 vioplot(HAIPoolOutcomes$Recur,HAIQueueOutcomes$Recur,names=c("Pool","Queue"),col="Grey",drawRect=FALSE)
 title("Recurrent C. difficile", ylab="Cases")
 vioplot(HAIPoolOutcomes$Incident,HAIQueueOutcomes$Incident,names=c("Pool","Queue"), col="Grey",drawRect=FALSE)
 title("Incident C. difficile", ylab="Cases")
 
-## Figure 4 - Computational runtimes
+## Figure 5 - Computational runtimes
 LVCompP <- subset(LVComp, Method=="Pool")$Time
 LVCompQ <- subset(LVComp, Method=="Queue")$Time
 CDICompP <- subset(CDIComp, Method=="Pool")$Time
