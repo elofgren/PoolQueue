@@ -109,7 +109,7 @@ realizations <- 250 # How many realizations of the model were run
 
 par(mfrow=c(1,1))
 # Plot Trajectories for Prey
-plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="", ylab="Prey", ylim=c(0,11.5))
+plot(0:sim_length, rep(NA,sim_length+1),main="",xlab="Time", ylab="Prey", ylim=c(0,11.5))
 for (i in 1:realizations) {
   lines(0:sim_length, PPreyT [ ,i],lwd=2,col=rgb(0,100,0,20,maxColorValue=255))
 }
