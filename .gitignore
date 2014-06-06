@@ -1,7 +1,4 @@
-
 _pys_parsetab.py
-
-*.psc
 
 *.pyc
 
@@ -14,4 +11,5 @@ CDIPoolNTrajectories.csv
 CDIQueueDTrajectories.csv
 
 CDIQueueNTrajectories.csv
+
 .Rhistory

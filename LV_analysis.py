@@ -4,18 +4,12 @@
 ####################################
 
 # Module Imports
-import pumphandle as ph
 import os
 import stochpy
 import pylab as pl
 import numpy as numpy
 
 workingdir = os.getcwd()
-
-# Pull down most recent files from internet
-LVPoolDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary.psc','LVpool.psc')
-
-LVQueueDownload = ph.NetDrop('https://raw.github.com/elofgren/PML/master/Ecology/LVpred_secondary_queue.psc','LVqueue.psc')	
 
 # General simulation parameters
 start_time = 0.0
